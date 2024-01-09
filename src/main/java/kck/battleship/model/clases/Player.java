@@ -4,7 +4,6 @@ import kck.battleship.controller.GameException;
 import kck.battleship.controller.ViewController;
 import kck.battleship.model.types.TypesDirection;
 import kck.battleship.model.types.TypesShips;
-import kck.battleship.view.textView.UserInput;
 import kck.battleship.view.View;
 
 import java.io.*;
