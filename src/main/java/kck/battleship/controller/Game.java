@@ -18,7 +18,7 @@ public class Game {
     private final View view = ViewController.getInstance();
     public static boolean hasExtraShip;
 
-    public Game(String name) {
+    public Game(String name){
         firstPlayer = new Player(name);
         firstPlayer.getShop();
         hasExtraShip = firstPlayer.hasAirCrafter;

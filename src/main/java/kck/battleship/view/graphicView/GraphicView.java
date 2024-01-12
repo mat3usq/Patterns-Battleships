@@ -836,7 +836,7 @@ public class GraphicView extends View {
         Position shoot = null;
         try {
             shoot = new Position(gameScreen.battle.x, gameScreen.battle.y);
-        } catch (GameException e) {
+        } catch (Exception e) {
             printError(e.getMessage());
         }
         return shoot;

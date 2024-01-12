@@ -8,9 +8,7 @@ public class Position {
     private int row;
     private int column;
 
-    public Position(int row, int column) throws GameException {
-        if (row < 0 || column < 0)
-            throw new GameException("Wprowadz pozycje, ktora jest na polu bitwy");
+    public Position(int row, int column) {
         this.row = row;
         this.column = column;
     }

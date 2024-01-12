@@ -23,6 +23,8 @@ public class Player {
     private final ArrayList<Ship> ships = createShips();
     private static final View view = ViewController.getInstance();
 
+    private Difficulty difficulty;
+
     public Player(String name) {
         this.name = name;
         isAI = false;
@@ -32,6 +34,7 @@ public class Player {
     public Player(String name, boolean isAI) {
         this.name = name;
         this.isAI = isAI;
+        difficulty = new Easy();
     }
 
     public String getName() {
@@ -131,17 +134,7 @@ public class Player {
     }
 
     public Position ComputerShoot(BattleField defenderBattleField) throws GameException {
-        if (shoots.isEmpty()) return Position.randPosition();
-        else {
-            nextShoots.addAll(defenderBattleField.getAdjacentValidPositions(getLastShoot()));
-
-            if (nextShoots.isEmpty())
-                return Position.randPosition();
-
-            Position nextPos = nextShoots.get(0);
-            nextShoots.remove(0);
-            return nextPos;
-        }
+       return difficulty.shootAtRandom();
     }
 
     public Position shoot(BattleField defenderBattleField) throws GameException {
