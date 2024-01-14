@@ -133,12 +133,31 @@ public class Player {
         return battleField.addHit(shoot);
     }
 
-    public Position ComputerShoot(BattleField defenderBattleField) throws GameException {
-       return difficulty.shootAtRandom();
+    public Position ComputerShoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
+       Position target = difficulty.shootAtRandom();
+       difficulty.get_result(defenderBattleField.at(target));
+       int ship_number =  0;
+       for(Ship s: ships)
+       {
+           if(!defenderBattleField.isShipSunk(s))
+           {
+               ship_number = ship_number + 1;
+           }
+       }
+       difficulty.enemy_ships_comprasion(ship_number);
+       return target;
     }
 
-    public Position shoot(BattleField defenderBattleField) throws GameException {
-        return ComputerShoot(defenderBattleField);
+
+    public Position shoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
+
+        for(int i = 0; i <= 9; i++) {
+            for(int j = 0; j <= 9; j++) {
+                Position pos = new Position(i, j);
+              //  System.out.println(defenderBattleField.at(pos));
+            }
+        }
+        return ComputerShoot(defenderBattleField, ships);
     }
 
     public void registerShoot(Position position) {

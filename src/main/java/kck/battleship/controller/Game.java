@@ -76,7 +76,7 @@ public class Game {
                     boolean isAddHit;
                     do {
                         try {
-                            shoot = attacker.shoot(defender.getBattleField().getbattleFieldHideShips());
+                            shoot = attacker.shoot(defender.getBattleField(),defender.getShips());
                             isAddHit = defender.addShoot(shoot);
                         } catch (GameException e) {
                             isAddHit = false;

@@ -4,7 +4,7 @@ import kck.battleship.controller.ViewController;
 import kck.battleship.view.graphicView.GraphicView;
 
 public enum TypesShips {
-    SUBMARINE(1, 1),
+    SUBMARINE(0, 1),
     CRUISER(2, 2),
     DESTROYER(2, 3),
     BATTLESHIP(1, 4);
