@@ -424,7 +424,7 @@ public class GraphicView extends View {
         else
             mainScreen.results.points.setText("");
 
-        Timer timer = new Timer(5000, e -> {
+        Timer timer = new Timer(50, e -> {
             mainScreen.results.setVisible(false);
             mainScreen.menuPanel.setVisible(true);
             printMenuPage(0);
@@ -848,7 +848,7 @@ public class GraphicView extends View {
 
     @Override
     public void delayForGameplay() {
-        Timer timer = new Timer(1000, e -> {
+        Timer timer = new Timer(10, e -> {
             gameScreen.battle.missImgAttacker.setVisible(false);
             gameScreen.battle.shotImgAttacker.setVisible(false);
             gameScreen.battle.missImgDefender.setVisible(false);

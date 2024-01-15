@@ -34,7 +34,7 @@ public class Player {
     public Player(String name, boolean isAI) {
         this.name = name;
         this.isAI = isAI;
-        difficulty = new Easy();
+        difficulty = new Hard();
     }
 
     public String getName() {
@@ -135,6 +135,7 @@ public class Player {
 
     public Position ComputerShoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
        Position target = difficulty.shootAtRandom();
+       ArrayList<Ship> notsunkedships = new ArrayList<>();
        difficulty.get_result(defenderBattleField.at(target));
        int ship_number =  0;
        for(Ship s: ships)
@@ -142,8 +143,10 @@ public class Player {
            if(!defenderBattleField.isShipSunk(s))
            {
                ship_number = ship_number + 1;
+               notsunkedships.add(s);
            }
        }
+       difficulty.get_ships_and_change_smallest_ship(notsunkedships);
        difficulty.enemy_ships_comprasion(ship_number);
        return target;
     }

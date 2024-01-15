@@ -117,7 +117,7 @@ public class Game {
     public void playRound() {
         boolean attacker = playTurn(firstPlayer, secondPlayer, false);
         if (attacker) {
-            Timer timer = new Timer(2000, e -> playTurn(secondPlayer, firstPlayer, false));
+            Timer timer = new Timer(10, e -> playTurn(secondPlayer, firstPlayer, false));
             timer.setRepeats(false);
             timer.start();
         }
@@ -143,12 +143,12 @@ public class Game {
 
     private void playSimulateGame() throws InterruptedException {
         boolean attacker = playTurn(firstPlayer, secondPlayer, false);
-        Thread.sleep(1500);
+        Thread.sleep(15);
 
         if (attacker)
             playTurn(secondPlayer, firstPlayer, true);
 
-        Thread.sleep(1500);
+        Thread.sleep(15);
 
         if (!firstPlayer.areShipsStillSailing() || !secondPlayer.areShipsStillSailing())
             printResultGame();
