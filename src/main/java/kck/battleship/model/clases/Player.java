@@ -23,6 +23,8 @@ public class Player {
     private final ArrayList<Ship> ships = createShips();
     private static final View view = ViewController.getInstance();
 
+    private Difficulty difficulty;
+
     public Player(String name) {
         this.name = name;
         isAI = false;
@@ -32,6 +34,7 @@ public class Player {
     public Player(String name, boolean isAI) {
         this.name = name;
         this.isAI = isAI;
+        difficulty = new Hard();
     }
 
     public String getName() {
@@ -130,22 +133,34 @@ public class Player {
         return battleField.addHit(shoot);
     }
 
-    public Position ComputerShoot(BattleField defenderBattleField) throws GameException {
-        if (shoots.isEmpty()) return Position.randPosition();
-        else {
-            nextShoots.addAll(defenderBattleField.getAdjacentValidPositions(getLastShoot()));
-
-            if (nextShoots.isEmpty())
-                return Position.randPosition();
-
-            Position nextPos = nextShoots.get(0);
-            nextShoots.remove(0);
-            return nextPos;
-        }
+    public Position ComputerShoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
+       Position target = difficulty.shootAtRandom();
+       ArrayList<Ship> notsunkedships = new ArrayList<>();
+       difficulty.get_result(defenderBattleField.at(target));
+       int ship_number =  0;
+       for(Ship s: ships)
+       {
+           if(!defenderBattleField.isShipSunk(s))
+           {
+               ship_number = ship_number + 1;
+               notsunkedships.add(s);
+           }
+       }
+       difficulty.get_ships_and_change_smallest_ship(notsunkedships);
+       difficulty.enemy_ships_comprasion(ship_number);
+       return target;
     }
 
-    public Position shoot(BattleField defenderBattleField) throws GameException {
-        return ComputerShoot(defenderBattleField);
+
+    public Position shoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
+
+        for(int i = 0; i <= 9; i++) {
+            for(int j = 0; j <= 9; j++) {
+                Position pos = new Position(i, j);
+              //  System.out.println(defenderBattleField.at(pos));
+            }
+        }
+        return ComputerShoot(defenderBattleField, ships);
     }
 
     public void registerShoot(Position position) {
