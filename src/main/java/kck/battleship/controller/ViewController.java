@@ -5,16 +5,15 @@ import kck.battleship.view.View;
 
 
 public class ViewController {
-    public static int choice;
+    public final int choice;
     private static GraphicView graphicView;
 
     public ViewController(int x) {
         choice = x;
-
-            graphicView = new GraphicView();
-            graphicView.printHomePage();
-            graphicView.waitForKeyHomePage();
-            graphicView.chooseOption(0);
+        graphicView = new GraphicView();
+        graphicView.printHomePage();
+        graphicView.waitForKeyHomePage();
+        graphicView.chooseOption(0);
     }
 
     public static View getInstance() {

@@ -1,10 +1,13 @@
-package kck.battleship.model.clases;
+package kck.battleship.model.clases.Strategy;
+
+import kck.battleship.model.clases.Position;
+import kck.battleship.model.clases.Ship;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Hard implements Difficulty{
+public class Easy implements Difficulty{
     private int[][] board;
     private List<Position> positions;
 
@@ -14,28 +17,19 @@ public class Hard implements Difficulty{
     private Position lastshootPosition;
     private int smallestship = 2;
 
-    private ProbabilityTable probabilityTable;
-
-    private ProbabilityIterator probabilityIterator;
-
-    private ArrayList<Observer> observers;
-
-    private  ArrayList<Integer> emptylist;
-
-    public Hard() {
+    public Easy() {
         this.board = new int[12][12];
         this.positions = new ArrayList<>();
         this.enemyships = 5;
-        emptylist = new ArrayList<>();
         initializePositions();
-        probabilityTable = new ProbabilityTable();
-        probabilityIterator = new ProbabilityIterator(probabilityTable);
-        observers = new ArrayList<>();
-        addObserver(probabilityTable);
-        addObserver(probabilityIterator);
     }
 
     private void initializePositions() {
+        for (int row = 0; row < 10; row++) {
+            for (int column = 0; column < 10; column++) {
+                    positions.add(new Position(row, column));
+            }
+        }
         for(int i=0;i<=11;i++)
         {
             board[0][i]=1;
@@ -54,28 +48,16 @@ public class Hard implements Difficulty{
         }
     }
 
-    void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    void notifyObservers(Position position, ArrayList<Integer> shiplenght) {
-        for (Observer observer : observers) {
-            observer.update(position,shiplenght);
-        }
-    }
-
     public Position shootAtRandom() {
-        if(lastshootPosition != null) {
-            board[lastshootPosition.getColumn() + 1][lastshootPosition.getRow() + 1] = lastshot;
-            notifyObservers(lastshootPosition, emptylist);
-        }
-        System.out.println(lastshot);
+        if(lastshootPosition != null)
+            board[lastshootPosition.getColumn()+1][lastshootPosition.getRow()+1] = lastshot;
+            System.out.println(lastshot);
         for(int i=1;i<=10;i++)
         {
             for(int j=1;j<=10;j++)
             {
                 if(board[i][j] == 1 || board[i][j]==2)
-                    System.out.println("shoot result =" + board[i][j] + " " + (j-1) + " " + (i-1));
+                System.out.println("shoot result =" + board[i][j] + " " + (j-1) + " " + (i-1));
                 if(board[i][j] == 2)
                 {
                     if(board[i+1][j]==2 && board[i-1][j]==2)
@@ -184,14 +166,11 @@ public class Hard implements Difficulty{
             }
         }
         Random random = new Random();
-        while (probabilityIterator.hasNext()) {
-         positions.add(probabilityIterator.next());
-        }
         int randomIndex = random.nextInt(positions.size());
         Position target = positions.get(randomIndex);
         positions.remove(randomIndex);
         lastshootPosition= target;
-        System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
+    System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
         return target;
     }
     public void get_result(char result)
@@ -238,22 +217,6 @@ public class Hard implements Difficulty{
                     {
                         System.out.println("czemu to sie robi");
                         board[i][j]=3;
-                        if(board[i+1][j]!=2) {
-                            board[i + 1][j] = 1;
-                            notifyObservers(new Position(j-1,i),emptylist);
-                        }
-                        if(board[i-1][j]!=2) {
-                            board[i - 1][j] = 1;
-                            notifyObservers(new Position(j-1,i-2),emptylist);
-                        }
-                        if(board[i][j+1]!=2) {
-                            board[i][j + 1] = 1;
-                            notifyObservers(new Position(j,i-1),emptylist);
-                        }
-                        if(board[i+1][j-1]!=2) {
-                            board[i][j - 1] = 1;
-                            notifyObservers(new Position(j-2,i-1),emptylist);
-                        }
                     }
                 }
             }
@@ -262,18 +225,13 @@ public class Hard implements Difficulty{
 
     public void get_ships_and_change_smallest_ship(ArrayList<Ship> ships){
         int new_small_lenght = 100;
-        ArrayList<Integer> lenghts = new ArrayList<>();
         for(Ship s: ships) {
             new_small_lenght = Integer.min(new_small_lenght,s.getLength());
-            lenghts.add(s.getLength());
         }
-        notifyObservers(lastshootPosition,lenghts);
         if(new_small_lenght>smallestship)
         {
             smallestship=new_small_lenght;
         }
 
     }
-
 }
-

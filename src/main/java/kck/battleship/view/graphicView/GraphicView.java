@@ -290,8 +290,9 @@ public class GraphicView extends View {
             case 0 -> {
                 try {
                     mainScreen.setVisible(false);
-                    game = new Game(name);
                     gameScreen = new GameScreen(false);
+                    game = Game.getInstance();
+                    game.setPlayerGame(name);
                     game.addAllShips();
                 } catch (IOException | InterruptedException ex) {
                     throw new RuntimeException(ex);
@@ -302,7 +303,8 @@ public class GraphicView extends View {
                 gameScreen = new GameScreen(true);
                 gameScreen.setVisible(true);
                 gameScreen.battle.setVisible(true);
-                game = new Game();
+                game = Game.getInstance();
+                game.setSimulateGame();
                 game.runSimulation();
             }
             case 2 -> {
@@ -521,9 +523,9 @@ public class GraphicView extends View {
             }
         }
 
-//        if (firstPlayer.isAI())
-//            showEnemyShipsSimulate(secondPlayerShips);
-//        else showEnemyShips(secondPlayerShips);
+        if (firstPlayer.isAI())
+            showEnemyShipsSimulate(secondPlayerShips);
+        else showEnemyShips(secondPlayerShips);
 
         for (Ship ship : firstPlayerShips) {
             if (firstBattleField.isShipSunk(ship)) {
@@ -817,7 +819,7 @@ public class GraphicView extends View {
             gameScreen.manage.game.setVisible(false);
             gameScreen.manage.setVisible(false);
             gameScreen.battle.setVisible(true);
-            printBoards(Game.getFirstPlayer(), Game.getSecondPlayer());
+            printBoards(game.getFirstPlayer(), game.getSecondPlayer());
             showOptionToPlay();
         });
     }

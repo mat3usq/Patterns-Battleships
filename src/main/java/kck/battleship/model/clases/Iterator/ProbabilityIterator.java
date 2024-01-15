@@ -1,4 +1,7 @@
-package kck.battleship.model.clases;
+package kck.battleship.model.clases.Iterator;
+
+import kck.battleship.model.clases.Strategy.Observer;
+import kck.battleship.model.clases.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,6 @@ public class ProbabilityIterator implements Observer {
         this.currentIndex = 0;
         findMaxProbabilityPositions();
     }
-
 
     private void findMaxProbabilityPositions() {
         currentMaxProbability = -1;

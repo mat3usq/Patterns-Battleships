@@ -1,4 +1,7 @@
-package kck.battleship.model.clases;
+package kck.battleship.model.clases.Strategy;
+
+import kck.battleship.model.clases.Position;
+import kck.battleship.model.clases.Ship;
 
 import java.util.ArrayList;
 import java.util.List;

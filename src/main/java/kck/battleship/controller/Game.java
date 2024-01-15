@@ -12,13 +12,23 @@ import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Game {
-    private static Player firstPlayer = null;
-    private final Ranking firstPlayerRank;
-    private static Player secondPlayer = null;
+    private Player firstPlayer = null;
+    private Ranking firstPlayerRank;
+    private Player secondPlayer = null;
     private final View view = ViewController.getInstance();
-    public static boolean hasExtraShip;
+    public  boolean hasExtraShip;
+    private static Game gameInstance;
 
-    public Game(String name){
+    private Game() {
+    }
+
+    public static Game getInstance() {
+        if (gameInstance == null)
+            gameInstance = new Game();
+        return gameInstance;
+    }
+
+    public void setPlayerGame(String name) {
         firstPlayer = new Player(name);
         firstPlayer.getShop();
         hasExtraShip = firstPlayer.hasAirCrafter;
@@ -26,36 +36,10 @@ public class Game {
         secondPlayer = new Player("Wróg", true);
     }
 
-    public Game() {
+    public void setSimulateGame() {
         firstPlayer = new Player("Enemy", true);
         secondPlayer = new Player("Enemy2", true);
         firstPlayerRank = null;
-    }
-
-    public void run() throws GameException, IOException, InterruptedException {
-        addAllShips();
-        view.printBoards(firstPlayer, secondPlayer);
-
-        if (firstPlayer.isAI() && secondPlayer.isAI())
-            playGame(firstPlayer, secondPlayer);
-        else
-            playGameHumanVsAI(firstPlayer, secondPlayer);
-
-        saveRanking();
-        printResultGame();
-
-        view.printMenuPage(0);
-        view.chooseOption(0);
-    }
-
-    private void playGame(Player player1, Player player2) {
-        while (playTurn(player1, player2, false) && playTurn(player2, player1, true)) {
-        }
-    }
-
-    private void playGameHumanVsAI(Player humanPlayer, Player aiPlayer) {
-        while (playTurn(humanPlayer, aiPlayer, false) && playTurn(aiPlayer, humanPlayer, false)) {
-        }
     }
 
     public boolean playTurn(Player attacker, Player defender, Boolean reverse) {
@@ -76,7 +60,7 @@ public class Game {
                     boolean isAddHit;
                     do {
                         try {
-                            shoot = attacker.shoot(defender.getBattleField(),defender.getShips());
+                            shoot = attacker.shoot(defender.getBattleField(), defender.getShips());
                             isAddHit = defender.addShoot(shoot);
                         } catch (GameException e) {
                             isAddHit = false;
@@ -201,11 +185,11 @@ public class Game {
             firstPlayerRank.save();
     }
 
-    public static Player getFirstPlayer() {
+    public Player getFirstPlayer() {
         return firstPlayer;
     }
 
-    public static Player getSecondPlayer() {
+    public Player getSecondPlayer() {
         return secondPlayer;
     }
 }

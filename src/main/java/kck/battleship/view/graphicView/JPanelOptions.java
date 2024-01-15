@@ -23,7 +23,7 @@ public class JPanelOptions extends JPanelBG {
         ImageIcon ship4 = new ImageIcon(getClass().getResource("/ship/ship4.png"));
         ImageIcon ship5 = new ImageIcon(getClass().getResource("/ship/ship5.png"));
 
-        if (Game.hasExtraShip) {
+        if (Game.getInstance().hasExtraShip) {
             ships = new JRadioButtonMenuItem[7];
             ships[6] = new JRadioButtonMenuItem(ship5);
             ships[6].setBounds(270, 600, 200, 40);
