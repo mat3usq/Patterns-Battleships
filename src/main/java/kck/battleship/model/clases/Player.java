@@ -2,6 +2,8 @@ package kck.battleship.model.clases;
 
 import kck.battleship.controller.GameException;
 import kck.battleship.controller.ViewController;
+import kck.battleship.model.clases.State.DefendState;
+import kck.battleship.model.clases.State.PlayerState;
 import kck.battleship.model.clases.Strategy.Difficulty;
 import kck.battleship.model.clases.Strategy.Hard;
 import kck.battleship.model.types.TypesDirection;
@@ -14,29 +16,43 @@ import java.util.Date;
 import java.util.Random;
 
 public class Player {
-    private String name;
+    private final String name;
     private final boolean isAI;
     public boolean hasAirCrafter = false;
     private int durabilityForceField = 0;
     private Date lastShootTime;
     private final BattleField battleField = new BattleField();
     private final ArrayList<Position> shoots = new ArrayList<>();
-    private final ArrayList<Position> nextShoots = new ArrayList<>();
+    public final ArrayList<Position> allShoots = new ArrayList<>();
     private final ArrayList<Ship> ships = createShips();
     private static final View view = ViewController.getInstance();
-
+    private PlayerState state;
     private Difficulty difficulty;
 
     public Player(String name) {
         this.name = name;
         isAI = false;
         lastShootTime = new Date();
+        this.state = new DefendState();
     }
 
     public Player(String name, boolean isAI) {
         this.name = name;
         this.isAI = isAI;
         difficulty = new Hard();
+        this.state = new DefendState();
+    }
+
+    public void changeState(PlayerState state) {
+        this.state = state;
+    }
+
+    public boolean defend() {
+        return state.defend(this);
+    }
+
+    public Position shot(Player defender) {
+        return state.shot(this, defender);
     }
 
     public String getName() {
@@ -135,31 +151,33 @@ public class Player {
         return battleField.addHit(shoot);
     }
 
+    public void addAllShoot(Position shoot){
+        allShoots.add(shoot);
+    }
+
     public Position ComputerShoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
-       Position target = difficulty.shootAtRandom();
-       ArrayList<Ship> notsunkedships = new ArrayList<>();
-       difficulty.get_result(defenderBattleField.at(target));
-       int ship_number =  0;
-       for(Ship s: ships)
-       {
-           if(!defenderBattleField.isShipSunk(s))
-           {
-               ship_number = ship_number + 1;
-               notsunkedships.add(s);
-           }
-       }
-       difficulty.get_ships_and_change_smallest_ship(notsunkedships);
-       difficulty.enemy_ships_comprasion(ship_number);
-       return target;
+        Position target = difficulty.shootAtRandom();
+        ArrayList<Ship> notsunkedships = new ArrayList<>();
+        difficulty.get_result(defenderBattleField.at(target));
+        int ship_number = 0;
+        for (Ship s : ships) {
+            if (!defenderBattleField.isShipSunk(s)) {
+                ship_number = ship_number + 1;
+                notsunkedships.add(s);
+            }
+        }
+        difficulty.get_ships_and_change_smallest_ship(notsunkedships);
+        difficulty.enemy_ships_comprasion(ship_number);
+        return target;
     }
 
 
     public Position shoot(BattleField defenderBattleField, ArrayList<Ship> ships) throws GameException {
 
-        for(int i = 0; i <= 9; i++) {
-            for(int j = 0; j <= 9; j++) {
+        for (int i = 0; i <= 9; i++) {
+            for (int j = 0; j <= 9; j++) {
                 Position pos = new Position(i, j);
-              //  System.out.println(defenderBattleField.at(pos));
+                //  System.out.println(defenderBattleField.at(pos));
             }
         }
         return ComputerShoot(defenderBattleField, ships);

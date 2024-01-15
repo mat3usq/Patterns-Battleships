@@ -3,20 +3,21 @@ package kck.battleship.controller;
 import kck.battleship.model.clases.Player;
 import kck.battleship.model.clases.Position;
 import kck.battleship.model.clases.Ranking;
+import kck.battleship.model.clases.State.DefendState;
+import kck.battleship.model.clases.State.ShotState;
 import kck.battleship.model.types.TypesField;
 import kck.battleship.view.View;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Game {
     private Player firstPlayer = null;
     private Ranking firstPlayerRank;
     private Player secondPlayer = null;
     private final View view = ViewController.getInstance();
-    public  boolean hasExtraShip;
+    public boolean hasExtraShip;
     private static Game gameInstance;
 
     private Game() {
@@ -43,57 +44,35 @@ public class Game {
     }
 
     public boolean playTurn(Player attacker, Player defender, Boolean reverse) {
-        Position shoot = null;
-        boolean isHit;
-
         if (attacker.isAI() && defender.isAI())
             view.showOptionToSimulatedGame();
         else
             view.showOptionToPlay();
 
-        if (attacker.areShipsStillSailing()) {
-            if (defender.getDurabilityForceField() > 0) {
-                defender.setDurabilityForceField(defender.getDurabilityForceField() - 1);
-                view.printBarrier(defender);
-            } else {
-                if (attacker.isAI()) {
-                    boolean isAddHit;
-                    do {
-                        try {
-                            shoot = attacker.shoot(defender.getBattleField(), defender.getShips());
-                            isAddHit = defender.addShoot(shoot);
-                        } catch (GameException e) {
-                            isAddHit = false;
-                        }
-                    } while (!isAddHit);
-                } else try {
-                    shoot = view.getPositionToShot(defender, attacker);
-                    defender.addShoot(shoot);
-                } catch (GameException e) {
-                    throw new RuntimeException(e);
-                }
+        attacker.changeState(new ShotState());
+        defender.changeState(new DefendState());
 
-                isHit = defender.getBattleField().at(shoot) == TypesField.HIT.name;
+        if (attacker.defend()) {
+            if (!defender.defend()) {
+                Position shoot = attacker.shot(defender);
+                attacker.addAllShoot(shoot);
 
-                if (isHit) {
+                if (defender.getBattleField().at(shoot) == TypesField.HIT.name) {
                     attacker.registerShoot(shoot);
                     updatePlayerPoints(attacker);
                 }
 
-                view.printShot(attacker, shoot, isHit);
+                defender.shot(attacker);
+
+                if (attacker.isAI() && defender.isAI() && !reverse)
+                    view.printBoards(attacker, defender);
+                else if (attacker.isAI() && defender.isAI() && reverse)
+                    view.printBoards(defender, attacker);
+                else if (!attacker.isAI())
+                    view.printBoards(attacker, defender);
+                else if (!defender.isAI())
+                    view.printBoards(defender, attacker);
             }
-
-            view.delayForGameplay();
-
-            if (attacker.isAI() && defender.isAI() && !reverse)
-                view.printBoards(attacker, defender);
-            else if (attacker.isAI() && defender.isAI() && reverse)
-                view.printBoards(defender, attacker);
-            else if (!attacker.isAI())
-                view.printBoards(attacker, defender);
-            else if (!defender.isAI())
-                view.printBoards(defender, attacker);
-
             return true;
         } else return false;
     }
@@ -127,12 +106,12 @@ public class Game {
 
     private void playSimulateGame() throws InterruptedException {
         boolean attacker = playTurn(firstPlayer, secondPlayer, false);
-        Thread.sleep(15);
+        Thread.sleep(1500);
 
         if (attacker)
             playTurn(secondPlayer, firstPlayer, true);
 
-        Thread.sleep(15);
+        Thread.sleep(1500);
 
         if (!firstPlayer.areShipsStillSailing() || !secondPlayer.areShipsStillSailing())
             printResultGame();
