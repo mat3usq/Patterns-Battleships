@@ -232,10 +232,20 @@ public class ViewController {
             @Override
             public void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    graphicView.mainScreen.menuPanel.setVisible(true);
-                    graphicView.mainScreen.rules.setVisible(false);
-                    graphicView.printMenuPage(3);
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_ESCAPE:
+                        graphicView.mainScreen.menuPanel.setVisible(true);
+                        graphicView.mainScreen.rules.setVisible(false);
+                        graphicView.printMenuPage(3);
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        if (graphicView.selectedMode + 1 < graphicView.sizeModes)
+                            graphicView.printMode(++graphicView.selectedMode);
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        if (graphicView.selectedMode - 1 >= 0)
+                            graphicView.printMode(--graphicView.selectedMode);
+                        break;
                 }
             }
         });

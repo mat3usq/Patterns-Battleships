@@ -22,6 +22,8 @@ public class GraphicView extends View {
     public int selectedMode = 0;
     public final int sizeOptions = 6;
     public final int sizeOptionsShop = 2;
+    public final int sizeModes = 3;
+
     public HomeScreen homeScreen;
     public LoginScreen loginScreen;
     public MainScreen mainScreen;
