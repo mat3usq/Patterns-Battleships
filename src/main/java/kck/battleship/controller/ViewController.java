@@ -215,14 +215,17 @@ public class ViewController {
         });
 
         graphicView.mainScreen.rules.easyMode.addActionListener(ev -> {
+            graphicView.mainScreen.rules.requestFocusInWindow();
             graphicView.printMode(0);
         });
 
         graphicView.mainScreen.rules.normalMode.addActionListener(ev -> {
+            graphicView.mainScreen.rules.requestFocusInWindow();
             graphicView.printMode(1);
         });
 
         graphicView.mainScreen.rules.hardMode.addActionListener(ev -> {
+            graphicView.mainScreen.rules.requestFocusInWindow();
             graphicView.printMode(2);
         });
     }
