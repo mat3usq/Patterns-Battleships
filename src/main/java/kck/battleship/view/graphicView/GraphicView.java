@@ -2,6 +2,7 @@ package kck.battleship.view.graphicView;
 
 import kck.battleship.controller.Game;
 import kck.battleship.controller.GameException;
+import kck.battleship.controller.ViewController;
 import kck.battleship.model.clases.*;
 import kck.battleship.model.types.TypesDirection;
 import kck.battleship.model.types.TypesField;
@@ -16,15 +17,15 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GraphicView extends View {
-    private int menuSelected = 0;
-    private int shopSelected = 0;
-    private final int sizeOptions = 6;
-    private final int sizeOptionsShop = 2;
-    private HomeScreen homeScreen;
-    private LoginScreen loginScreen;
-    private MainScreen mainScreen;
-    private GameScreen gameScreen;
-    private Game game;
+    public int menuSelected = 0;
+    public int shopSelected = 0;
+    public final int sizeOptions = 6;
+    public final int sizeOptionsShop = 2;
+    public HomeScreen homeScreen;
+    public LoginScreen loginScreen;
+    public MainScreen mainScreen;
+    public GameScreen gameScreen;
+    public Game game;
 
     public static String name;
 
@@ -36,230 +37,6 @@ public class GraphicView extends View {
     @Override
     public void printLoginPage() {
         loginScreen = new LoginScreen();
-        loginScreen.play.addActionListener(e -> {
-            if (!loginScreen.nicknameField.getText().isEmpty()) {
-                name = loginScreen.nicknameField.getText();
-                loginScreen.setVisible(false);
-                mainScreen = new MainScreen();
-                printMenuPage(0);
-
-                addMenuActionsListeners();
-                addMenuKeyListeners();
-
-                addShopActionsListeners();
-                addShopKeyListeners();
-
-                addShopPopupActionsListeners();
-                addShopPopupKeyListeners();
-
-                addRulesActionsListeners();
-                addRulesKeyListeners();
-
-                addRankingActionsListeners();
-                addRankingKeyListeners();
-            }
-        });
-
-        loginScreen.exit.addActionListener(e -> printExit());
-    }
-
-    private void addMenuActionsListeners() {
-        mainScreen.menuPanel.playGame.addActionListener(ev -> {
-            printMenuPage(0);
-            option(0);
-        });
-
-        mainScreen.menuPanel.simulateGame.addActionListener(ev -> {
-            printMenuPage(1);
-            option(1);
-        });
-
-        mainScreen.menuPanel.shop.addActionListener(ev -> {
-            printMenuPage(2);
-            option(2);
-        });
-
-        mainScreen.menuPanel.rules.addActionListener(ev -> {
-            printMenuPage(3);
-            option(3);
-        });
-
-        mainScreen.menuPanel.ranking.addActionListener(ev -> {
-            printMenuPage(4);
-            option(4);
-        });
-
-        mainScreen.menuPanel.exit.addActionListener(ev -> {
-            printMenuPage(5);
-            option(5);
-        });
-    }
-
-    private void addMenuKeyListeners() {
-        mainScreen.menuPanel.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ENTER:
-                        option(menuSelected);
-                        break;
-                    case KeyEvent.VK_ESCAPE:
-                        option(5);
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        if (menuSelected + 1 < sizeOptions)
-                            printMenuPage(++menuSelected);
-                        break;
-                    case KeyEvent.VK_UP:
-                        if (menuSelected - 1 >= 0)
-                            printMenuPage(--menuSelected);
-                        break;
-                }
-            }
-        });
-    }
-
-    private void addShopActionsListeners() {
-        mainScreen.shopPanel.extraShip.addActionListener(ev -> {
-            printShopPage(0);
-            mainScreen.popup.setVisible(true);
-            mainScreen.popup.requestFocusInWindow();
-        });
-
-        mainScreen.shopPanel.barrierShop.addActionListener(ev -> {
-            printShopPage(1);
-            mainScreen.popup.setVisible(true);
-            mainScreen.popup.requestFocusInWindow();
-        });
-
-        mainScreen.shopPanel.backShop.addActionListener(ev -> {
-            mainScreen.menuPanel.setVisible(true);
-            mainScreen.shopPanel.setVisible(false);
-            printMenuPage(2);
-        });
-    }
-
-    private void addShopKeyListeners() {
-        mainScreen.shopPanel.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ENTER:
-                        mainScreen.popup.setVisible(true);
-                        mainScreen.popup.requestFocusInWindow();
-                        break;
-                    case KeyEvent.VK_ESCAPE:
-                        mainScreen.menuPanel.setVisible(true);
-                        mainScreen.shopPanel.setVisible(false);
-                        printMenuPage(2);
-                        break;
-                    case KeyEvent.VK_DOWN:
-                        if (shopSelected + 1 < sizeOptionsShop)
-                            printShopPage(++shopSelected);
-                        break;
-                    case KeyEvent.VK_UP:
-                        if (shopSelected - 1 >= 0)
-                            printShopPage(--shopSelected);
-                        break;
-                }
-            }
-        });
-    }
-
-    private void addShopPopupActionsListeners() {
-        mainScreen.popup.okButton.addActionListener(ev -> {
-            buyItemInShop();
-            mainScreen.shopPanel.requestFocusInWindow();
-        });
-
-        mainScreen.popup.cancelButton.addActionListener(ev -> {
-            mainScreen.popup.setVisible(false);
-            mainScreen.shopPanel.requestFocusInWindow();
-        });
-    }
-
-    private void addShopPopupKeyListeners() {
-        mainScreen.popup.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ENTER:
-                        buyItemInShop();
-                        mainScreen.shopPanel.requestFocusInWindow();
-                        break;
-                    case KeyEvent.VK_ESCAPE:
-                        mainScreen.popup.setVisible(false);
-                        mainScreen.shopPanel.requestFocusInWindow();
-                        break;
-                }
-            }
-        });
-    }
-
-    private void addRulesActionsListeners() {
-        mainScreen.rules.backRules.addActionListener(ev -> {
-            mainScreen.menuPanel.setVisible(true);
-            mainScreen.rules.setVisible(false);
-            printMenuPage(3);
-        });
-    }
-
-    private void addRulesKeyListeners() {
-        mainScreen.rules.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    mainScreen.menuPanel.setVisible(true);
-                    mainScreen.rules.setVisible(false);
-                    printMenuPage(3);
-                }
-            }
-        });
-    }
-
-    private void addRankingActionsListeners() {
-        mainScreen.ranking.backRanking.addActionListener(ev -> {
-            mainScreen.menuPanel.setVisible(true);
-            mainScreen.ranking.setVisible(false);
-            printMenuPage(4);
-        });
-    }
-
-    private void addRankingKeyListeners() {
-        mainScreen.ranking.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    mainScreen.menuPanel.setVisible(true);
-                    mainScreen.ranking.setVisible(false);
-                    printMenuPage(4);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void waitForKeyHomePage() {
-        homeScreen.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                super.keyPressed(e);
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_ENTER:
-                        printLoginPage();
-                        homeScreen.setVisible(false);
-                        break;
-                    case KeyEvent.VK_ESCAPE:
-                        printExit();
-                        break;
-                }
-            }
-        });
     }
 
     @Override
@@ -277,44 +54,6 @@ public class GraphicView extends View {
         Timer exitTimer = new Timer(5000, ev -> System.exit(0));
         exitTimer.setRepeats(false);
         exitTimer.start();
-    }
-
-    @Override
-    public void chooseOption(int selected) {
-
-    }
-
-    @Override
-    public void option(int selected) {
-        switch (selected) {
-            case 0 -> {
-                try {
-                    mainScreen.setVisible(false);
-                    gameScreen = new GameScreen(false);
-                    game = Game.getInstance();
-                    game.setPlayerGame(name);
-                    game.addAllShips();
-                } catch (IOException | InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-            }
-            case 1 -> {
-                mainScreen.setVisible(false);
-                gameScreen = new GameScreen(true);
-                gameScreen.setVisible(true);
-                gameScreen.battle.setVisible(true);
-                game = Game.getInstance();
-                game.setSimulateGame();
-                game.runSimulation();
-            }
-            case 2 -> {
-                printShop();
-                printShopPage(0);
-            }
-            case 3 -> printRules();
-            case 4 -> printRanking(0);
-            case 5 -> printExit();
-        }
     }
 
     @Override
@@ -354,7 +93,7 @@ public class GraphicView extends View {
         }
     }
 
-    private void printShopPage(int selected) {
+    public void printShopPage(int selected) {
         this.shopSelected = selected;
         switch (selected) {
             case 0:
@@ -767,61 +506,9 @@ public class GraphicView extends View {
         else gameScreen.battle.countBarrier.setText(String.valueOf(defender.getDurabilityForceField()));
     }
 
-    private void buyItemInShop() {
-        String s;
-        mainScreen.popup.cancelButton.setVisible(false);
-        mainScreen.popup.okButton.setVisible(false);
-        mainScreen.popup.confrimLabel.setVisible(true);
-
-        if (shopSelected == 0)
-            s = Ranking.enoughPoints(name, 500, shopSelected, true);
-        else
-            s = Ranking.enoughPoints(name, 300, shopSelected, true);
-
-        mainScreen.popup.confrimLabel.setText(Objects.requireNonNullElse(s, "Pomyslnie zakupiono wybrana rzecz!"));
-
-        Timer timer = new Timer(2000, e -> {
-            mainScreen.popup.setVisible(false);
-            mainScreen.popup.confrimLabel.setVisible(false);
-            mainScreen.popup.cancelButton.setVisible(true);
-            mainScreen.popup.okButton.setVisible(true);
-        });
-        timer.setRepeats(false);
-        timer.start();
-    }
-
     @Override
     public boolean isRandomShipsArranged() {
-        AtomicBoolean isOkPressed = new AtomicBoolean();
-
-        gameScreen.popup.okButton.addActionListener(e -> addRandomShipsListenersOK(isOkPressed));
-
-        gameScreen.popup.cancelButton.addActionListener(e -> addRandomShipsListenersCANCEL(isOkPressed));
-
-        gameScreen.popup.setVisible(true);
-
-        return isOkPressed.get();
-    }
-
-    private void addRandomShipsListenersOK(AtomicBoolean isOkPressed) {
-        isOkPressed.set(true);
-        gameScreen.setVisible(true);
-        gameScreen.popup.setVisible(false);
-        gameScreen.battle.setVisible(true);
-        showOptionToPlay();
-    }
-
-    private void addRandomShipsListenersCANCEL(AtomicBoolean isOkPressed) {
-        isOkPressed.set(false);
-        gameScreen.popup.setVisible(false);
-
-        gameScreen.manage.game.addActionListener(ev -> {
-            gameScreen.manage.game.setVisible(false);
-            gameScreen.manage.setVisible(false);
-            gameScreen.battle.setVisible(true);
-            printBoards(game.getFirstPlayer(), game.getSecondPlayer());
-            showOptionToPlay();
-        });
+        return ViewController.addListenersOnPopupRandomArrangedShips();
     }
 
     @Override

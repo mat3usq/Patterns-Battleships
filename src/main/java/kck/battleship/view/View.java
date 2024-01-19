@@ -9,17 +9,11 @@ import java.util.ArrayList;
 public abstract class View {
     public abstract void printHomePage();
 
-    public abstract void waitForKeyHomePage() throws IOException;
-
     public abstract void printLoginPage();
 
     public abstract void printMenuPage(int selected);
 
     public abstract void printExit();
-
-    public abstract void chooseOption(int selected) throws IOException, GameException, InterruptedException;
-
-    public abstract void option(int selected) throws IOException, GameException, InterruptedException;
 
     public abstract void printRules() throws IOException, GameException, InterruptedException;
 

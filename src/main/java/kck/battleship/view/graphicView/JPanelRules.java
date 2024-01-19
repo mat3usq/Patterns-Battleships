@@ -9,7 +9,11 @@ import java.util.Objects;
 public class JPanelRules extends JPanelBG {
     public Cursor cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
     public JButton backRules;
+    public JButton easyMode;
+    public JButton normalMode;
+    public JButton hardMode;
     public JLabel rulesTitle;
+
     public JPanelRules() {
         super(Toolkit.getDefaultToolkit()
                 .createImage(MainScreen.class.getResource("/backgroundRules.png")));
@@ -32,6 +36,49 @@ public class JPanelRules extends JPanelBG {
 
         this.add(backRules, 0);
         backRules.setBounds(20, 20, 100, 100);
+
+        ImageIcon easyModeImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/easyMode.png")));
+//        ImageIcon playViewImgHover = new ImageIcon(Objects.requireNonNull(getClass().getResource("/menu.png")));
+        easyMode = new JButton(easyModeImg);
+//        play.setRolloverIcon(playViewImgHover);
+        easyMode.setBorder(null);
+        easyMode.setOpaque(false);
+        easyMode.setBorderPainted(false);
+        easyMode.setContentAreaFilled(false);
+        easyMode.setCursor(cursor);
+        easyMode.setText("easyMode");
+
+        this.add(easyMode, 1);
+        easyMode.setBounds(50, 180, 150, 86);
+
+        ImageIcon normalModeImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/normalMode.png")));
+//        ImageIcon playViewImgHover = new ImageIcon(Objects.requireNonNull(getClass().getResource("/menu.png")));
+        normalMode = new JButton(normalModeImg);
+//        play.setRolloverIcon(playViewImgHover);
+        normalMode.setBorder(null);
+        normalMode.setOpaque(false);
+        normalMode.setBorderPainted(false);
+        normalMode.setContentAreaFilled(false);
+        normalMode.setCursor(cursor);
+        normalMode.setText("normalMode");
+
+        this.add(normalMode, 2);
+        normalMode.setBounds(250, 180, 150, 86);
+
+        ImageIcon hardModeImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/hardMode.png")));
+//        ImageIcon playViewImgHover = new ImageIcon(Objects.requireNonNull(getClass().getResource("/menu.png")));
+        hardMode = new JButton(hardModeImg);
+//        play.setRolloverIcon(playViewImgHover);
+        hardMode.setBorder(null);
+        hardMode.setOpaque(false);
+        hardMode.setBorderPainted(false);
+        hardMode.setContentAreaFilled(false);
+        hardMode.setCursor(cursor);
+        hardMode.setText("hardMode");
+
+        this.add(hardMode, 3);
+        hardMode.setBounds(450, 180, 150, 86);
+
 
         JLabel rules = new JLabel("<html><body style='width: 220px; color: darkred;'>" +
                 "<div style='text-align: center; font-size: 20px; font-weight: bold; border-bottom: 2px solid brown; margin-bottom: 5px;'>Jak wygrać?</div>" +

@@ -17,31 +17,30 @@ public class JPanelOptions extends JPanelBG {
         this.setOpaque(false);
         this.setBounds(550, -20, 800, 800);
 
-        ImageIcon ship1 = new ImageIcon(getClass().getResource("/ship/ship1.png"));
+//        ImageIcon ship1 = new ImageIcon(getClass().getResource("/ship/ship1.png"));
         ImageIcon ship2 = new ImageIcon(getClass().getResource("/ship/ship2.png"));
         ImageIcon ship3 = new ImageIcon(getClass().getResource("/ship/ship3.png"));
         ImageIcon ship4 = new ImageIcon(getClass().getResource("/ship/ship4.png"));
         ImageIcon ship5 = new ImageIcon(getClass().getResource("/ship/ship5.png"));
 
         if (Game.getInstance().hasExtraShip) {
-            ships = new JRadioButtonMenuItem[7];
-            ships[6] = new JRadioButtonMenuItem(ship5);
-            ships[6].setBounds(270, 600, 200, 40);
-        } else
             ships = new JRadioButtonMenuItem[6];
+            ships[5] = new JRadioButtonMenuItem(ship5);
+            ships[5].setBounds(270, 600, 200, 40);
+        } else
+            ships = new JRadioButtonMenuItem[5];
 
-        ships[0] = new JRadioButtonMenuItem(ship1);
-        ships[0].setBounds(150, 500, 160, 40);
+        ships[0] = new JRadioButtonMenuItem(ship2);
+        ships[0].setBounds(170, 500, 160, 40);
         ships[1] = new JRadioButtonMenuItem(ship2);
-        ships[1].setBounds(215, 500, 160, 40);
-        ships[2] = new JRadioButtonMenuItem(ship2);
-        ships[2].setBounds(305, 500, 160, 40);
+        ships[1].setBounds(265, 500, 160, 40);
+        ships[2] = new JRadioButtonMenuItem(ship3);
+        ships[2].setBounds(355, 500, 160, 40);
+
         ships[3] = new JRadioButtonMenuItem(ship3);
-        ships[3].setBounds(400, 500, 160, 40);
-        ships[4] = new JRadioButtonMenuItem(ship3);
-        ships[4].setBounds(180, 550, 160, 40);
-        ships[5] = new JRadioButtonMenuItem(ship4);
-        ships[5].setBounds(320, 550, 160, 40);
+        ships[3].setBounds(180, 550, 160, 40);
+        ships[4] = new JRadioButtonMenuItem(ship4);
+        ships[4].setBounds(320, 550, 160, 40);
 
         for (JRadioButtonMenuItem ship : ships) {
             ship.setOpaque(false);
