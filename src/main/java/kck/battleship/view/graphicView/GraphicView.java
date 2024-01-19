@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class GraphicView extends View {
     public int menuSelected = 0;
     public int shopSelected = 0;
+    public int selectedMode = 0;
     public final int sizeOptions = 6;
     public final int sizeOptionsShop = 2;
     public HomeScreen homeScreen;
@@ -26,7 +27,6 @@ public class GraphicView extends View {
     public MainScreen mainScreen;
     public GameScreen gameScreen;
     public Game game;
-
     public static String name;
 
     @Override
@@ -112,6 +112,7 @@ public class GraphicView extends View {
         mainScreen.menuPanel.setVisible(false);
         mainScreen.rules.setVisible(true);
         mainScreen.rules.requestFocusInWindow();
+        printMode(selectedMode);
     }
 
     @Override
@@ -546,5 +547,21 @@ public class GraphicView extends View {
         });
         timer.setRepeats(false);
         timer.start();
+    }
+
+    @Override
+    public void printMode(int selected) {
+        this.selectedMode = selected;
+        switch (selected) {
+            case 0:
+                mainScreen.rules.upLabel.setBounds(185, 120, 30, 30);
+                break;
+            case 1:
+                mainScreen.rules.upLabel.setBounds(340, 120, 30, 30);
+                break;
+            case 2:
+                mainScreen.rules.upLabel.setBounds(500, 120, 30, 30);
+                break;
+        }
     }
 }

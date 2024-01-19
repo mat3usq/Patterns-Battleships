@@ -213,6 +213,18 @@ public class ViewController {
             graphicView.mainScreen.rules.setVisible(false);
             graphicView.printMenuPage(3);
         });
+
+        graphicView.mainScreen.rules.easyMode.addActionListener(ev -> {
+            graphicView.printMode(0);
+        });
+
+        graphicView.mainScreen.rules.normalMode.addActionListener(ev -> {
+            graphicView.printMode(1);
+        });
+
+        graphicView.mainScreen.rules.hardMode.addActionListener(ev -> {
+            graphicView.printMode(2);
+        });
     }
 
     private void addRulesKeyListeners() {

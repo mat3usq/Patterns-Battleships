@@ -13,6 +13,7 @@ public class JPanelRules extends JPanelBG {
     public JButton normalMode;
     public JButton hardMode;
     public JLabel rulesTitle;
+    public JLabel upLabel;
 
     public JPanelRules() {
         super(Toolkit.getDefaultToolkit()
@@ -49,7 +50,7 @@ public class JPanelRules extends JPanelBG {
         easyMode.setText("easyMode");
 
         this.add(easyMode, 1);
-        easyMode.setBounds(50, 180, 150, 86);
+        easyMode.setBounds(120, 30, 150, 86);
 
         ImageIcon normalModeImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/normalMode.png")));
 //        ImageIcon playViewImgHover = new ImageIcon(Objects.requireNonNull(getClass().getResource("/menu.png")));
@@ -63,7 +64,7 @@ public class JPanelRules extends JPanelBG {
         normalMode.setText("normalMode");
 
         this.add(normalMode, 2);
-        normalMode.setBounds(250, 180, 150, 86);
+        normalMode.setBounds(280, 30, 150, 86);
 
         ImageIcon hardModeImg = new ImageIcon(Objects.requireNonNull(getClass().getResource("/hardMode.png")));
 //        ImageIcon playViewImgHover = new ImageIcon(Objects.requireNonNull(getClass().getResource("/menu.png")));
@@ -77,8 +78,11 @@ public class JPanelRules extends JPanelBG {
         hardMode.setText("hardMode");
 
         this.add(hardMode, 3);
-        hardMode.setBounds(450, 180, 150, 86);
+        hardMode.setBounds(440, 30, 150, 86);
 
+        ImageIcon upArrow = new ImageIcon(Objects.requireNonNull(getClass().getResource("/arrowUp.png")));
+        upLabel = new JLabel(upArrow);
+        this.add(upLabel, 4);
 
         JLabel rules = new JLabel("<html><body style='width: 220px; color: darkred;'>" +
                 "<div style='text-align: center; font-size: 20px; font-weight: bold; border-bottom: 2px solid brown; margin-bottom: 5px;'>Jak wygrać?</div>" +
@@ -108,6 +112,6 @@ public class JPanelRules extends JPanelBG {
         this.add(scrollPane);
 
         rulesTitle.setBounds(195, -25, 200, 200);
-        this.add(rulesTitle);
+//        this.add(rulesTitle);
     }
 }
