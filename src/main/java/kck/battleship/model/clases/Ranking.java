@@ -13,6 +13,15 @@ public class Ranking {
         this.points = points;
     }
 
+    public RankingMemento saveToMemento() {
+        return new RankingMemento(player, points);
+    }
+
+    public void restoreFromMemento(RankingMemento memento) {
+        this.player = memento.getPlayer();
+        this.points = memento.getPoints();
+    }
+
     public int getPoints() {
         return points;
     }
