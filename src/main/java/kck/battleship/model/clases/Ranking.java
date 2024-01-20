@@ -1,10 +1,12 @@
 package kck.battleship.model.clases;
 
+import kck.battleship.model.clases.Decorator.IRanking;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ranking {
+public class Ranking implements IRanking {
     public Player player;
     private int points;
 
@@ -13,19 +15,12 @@ public class Ranking {
         this.points = points;
     }
 
-    public RankingMemento saveToMemento() {
-        return new RankingMemento(player, points);
-    }
-
-    public void restoreFromMemento(RankingMemento memento) {
-        this.player = memento.getPlayer();
-        this.points = memento.getPoints();
-    }
-
+    @Override
     public int getPoints() {
-        return points;
+        return this.points;
     }
 
+    @Override
     public void addPoints(int points) {
         this.points += points;
     }

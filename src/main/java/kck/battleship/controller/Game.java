@@ -1,10 +1,15 @@
 package kck.battleship.controller;
 
+import kck.battleship.model.clases.Decorator.EasyRankingDecorator;
+import kck.battleship.model.clases.Decorator.HardRankingDecorator;
+import kck.battleship.model.clases.Decorator.IRanking;
+import kck.battleship.model.clases.Decorator.NormalRankingDecorator;
 import kck.battleship.model.clases.Player;
 import kck.battleship.model.clases.Position;
 import kck.battleship.model.clases.Ranking;
 import kck.battleship.model.clases.State.DefendState;
 import kck.battleship.model.clases.State.ShotState;
+import kck.battleship.model.clases.Strategy.Difficulty;
 import kck.battleship.model.types.TypesField;
 import kck.battleship.view.View;
 
@@ -19,6 +24,7 @@ public class Game {
     private final View view = ViewController.getInstance();
     public boolean hasExtraShip;
     private static Game gameInstance;
+    private IRanking playerRanking;
 
     private Game() {
     }
@@ -35,6 +41,18 @@ public class Game {
         hasExtraShip = firstPlayer.hasAirCrafter;
         firstPlayerRank = new Ranking(firstPlayer, 0);
         secondPlayer = new Player(true, view.getSelectedMode());
+
+        switch (view.getSelectedMode()) {
+            case 0:
+                playerRanking = new EasyRankingDecorator(firstPlayerRank);
+                break;
+            case 1:
+                playerRanking = new NormalRankingDecorator(firstPlayerRank);
+                break;
+            case 2:
+                playerRanking = new HardRankingDecorator(firstPlayerRank);
+                break;
+        }
     }
 
     public void setSimulateGame() {
@@ -121,7 +139,10 @@ public class Game {
     private void updatePlayerPoints(Player player) {
         if (!player.isAI()) {
             long diff = new Date().getTime() - player.getLastShootTime().getTime();
-            firstPlayerRank.addPoints((int) (100 / (diff / 400.0)));
+            int pointsToAdd = (int) (100 / (diff / 400.0));
+
+            playerRanking.addPoints(pointsToAdd);
+
             player.setLastShootTime(new Date());
         }
     }
