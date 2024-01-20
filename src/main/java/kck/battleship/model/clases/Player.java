@@ -38,15 +38,25 @@ public class Player {
         this.state = new DefendState();
     }
 
-    public Player(String name, boolean isAI, String diffi) {
-        this.name = name;
+    public Player(boolean isAI, int mode) {
+
         this.isAI = isAI;
-        if(diffi == "Easy")
-        difficulty = new Easy();
-        if(diffi == "Normal")
+        if(mode == 0) {
+            difficulty = new Easy();
+            this.name = "Easy";
+        }
+        else if(mode == 1) {
             difficulty = new Normal();
-        if(diffi == "Hard")
+            this.name = "Normal";
+        }
+        else if(mode == 2) {
             difficulty = new Hard();
+            this.name = "Hard";
+        }
+        else{
+            difficulty = new Hard();
+            this.name = "Blad";
+        }
         this.state = new DefendState();
     }
 
@@ -194,10 +204,6 @@ public class Player {
         shoots.add(position);
     }
 
-    public Position getLastShoot() {
-        if (shoots.isEmpty()) return null;
-        return shoots.get(shoots.size() - 1);
-    }
 
     private void reset() {
         battleField.reset();

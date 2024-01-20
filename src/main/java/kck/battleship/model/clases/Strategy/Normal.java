@@ -68,38 +68,35 @@ public class Normal implements Difficulty {
         {
             for(int j=1;j<=10;j++)
             {
-              //  if(board[i][j] == 1 || board[i][j]==2)
-                 //   System.out.println("shoot result =" + board[i][j] + " " + (j-1) + " " + (i-1));
                 if(board[i][j] == 2)
                 {
                     if(board[i+1][j]==2 && board[i-1][j]==2)
                     {
-                        System.out.println("xd");
+                        //donothing
                     }
                     else if(board[i+1][j]==1 && board[i-1][j]==2)
                     {
-                        System.out.println("xd");
+                        //donothing
                     }
                     else if(board[i+1][j]==2 && board[i-1][j]==1)
                     {
-                        System.out.println("xd");
+                        //donothing
                     }
                     else if(board[i][j+1]==2 && board[i][j-1]==2)
                     {
-                        System.out.println("xd");
+                        //donothing
                     }
                     else if(board[i][j+1]==1 && board[i][j-1]==2)
                     {
-                        System.out.println("xd");
+                        //donothing
                     }
                     else if(board[i][j+1]==2 && board[i][j-1]==1)
                     {
-                        System.out.println("xd");
+                        //donothing
                     }
                     else if(board[i][j+1]==2 && board[i][j-1]==0)
                     {
                         Position temppos = new Position(j-2,i-1);
-                        System.out.println("2 i 0 po jotach");
                         lastshootPosition = temppos;
                         positions.remove(temppos);
                         return temppos;
@@ -107,7 +104,6 @@ public class Normal implements Difficulty {
                     else if(board[i][j+1]==0 && board[i][j-1]==2)
                     {
                         Position temppos = new Position(j,i-1);
-                        System.out.println("0 i 2 po jotach");
                         lastshootPosition = temppos;
                         positions.remove(temppos);
                         return temppos;
@@ -115,7 +111,6 @@ public class Normal implements Difficulty {
                     else if(board[i-1][j]==2 && board[i+1][j]==0)
                     {
                         Position temppos = new Position(j-1,i);
-                        System.out.println("2 i 0 po ikach");
                         lastshootPosition = temppos;
                         positions.remove(temppos);
                         return temppos;
@@ -123,7 +118,6 @@ public class Normal implements Difficulty {
                     else if(board[i-1][j]==0 && board[i+1][j]==2)
                     {
                         Position temppos = new Position(j-1,i-2);
-                        System.out.println("0 i 2 po ikach");
                         lastshootPosition = temppos;
                         positions.remove(temppos);
                         return temppos;
@@ -132,7 +126,6 @@ public class Normal implements Difficulty {
                     {
                         Position temppos = new Position(j-1,i-2);
                         lastshootPosition = temppos;
-                        System.out.println("0 i 0 się wykonuje po i");
                         positions.remove(temppos);
                         return temppos;
                     }
@@ -154,7 +147,6 @@ public class Normal implements Difficulty {
                     {
                         Position temppos = new Position(j,i-1);
                         lastshootPosition = temppos;
-                        System.out.println("0 i 0 się wykonuje po jotach");
                         positions.remove(temppos);
                         return temppos;
                     }
@@ -182,44 +174,39 @@ public class Normal implements Difficulty {
         Position target = positions.get(randomIndex);
         positions.remove(randomIndex);
         lastshootPosition= target;
-        System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
+        //System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
         return target;
     }
     public void get_result(char result)
     {
         if(result=='✘'){
             lastshot = 2;
-            System.out.println("Lastresult" + result);
         }
         else if(result =='◉'){
             lastshot = 1;
-            System.out.println("Lastresult" + result);
         }
         else if(result =='⎕'){
             lastshot = 2;
-            System.out.println("Lastresult" + result);
         }
         else if(result =='ℳ')
         {
             lastshot = 1;
-            System.out.println("Lastresult" + result);
         }
         else if(result =='✜')
         {
             lastshot = 2;
-            System.out.println("Lastresult" + result);
         }
         else
         {
-            System.out.println("Last result" + result);
             lastshot =0;
         }
     }
 
     @Override
     public void enemy_ships_comprasion(int ships) {
-        System.out.println("Statki o ktorym wiem " + enemyships + " statki obecnie " + ships);
-        if(enemyships!=ships) {
+        if(ships>enemyships)
+            enemyships =ships;
+        if(enemyships>ships) {
             enemyships = enemyships - 1;
             for(int i=1;i<=10;i++)
             {
@@ -228,7 +215,6 @@ public class Normal implements Difficulty {
                     if(board[i][j]==2)
                     {
                         board[i][j]=3;
-                        System.out.println("czemu to sie robi");
                         if(board[i+1][j]!=2)
                             board[i+1][j]=1;
                       if(board[i-1][j]!=2)
@@ -252,7 +238,6 @@ public class Normal implements Difficulty {
         }
         if(new_small_lenght>smallestship)
         {
-            System.out.println("WYKONAŁO SIĘ GET AND CHANGE SMALLEST SHIP");
             smallestship=new_small_lenght;
             normal_inicialPostionsList();
         }

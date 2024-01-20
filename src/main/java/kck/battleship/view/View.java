@@ -50,4 +50,6 @@ public abstract class View {
     public abstract Position getPositionToShot(Player defender, Player attacker);
 
     public abstract void printMode(int selected);
+
+    public abstract int getSelectedMode();
 }

@@ -561,4 +561,8 @@ public class GraphicView extends View {
                 break;
         }
     }
+    @Override
+    public int getSelectedMode(){
+        return selectedMode;
+    }
 }

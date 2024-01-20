@@ -34,12 +34,12 @@ public class Game {
         firstPlayer.getShop();
         hasExtraShip = firstPlayer.hasAirCrafter;
         firstPlayerRank = new Ranking(firstPlayer, 0);
-        secondPlayer = new Player("Wróg", true, "Hard");
+        secondPlayer = new Player(true, view.getSelectedMode());
     }
 
     public void setSimulateGame() {
-        firstPlayer = new Player("Easy", true, "Easy");
-        secondPlayer = new Player("Normal", true, "Normal");
+        firstPlayer = new Player( true, view.getSelectedMode());
+        secondPlayer = new Player( true, view.getSelectedMode());
         firstPlayerRank = null;
     }
 
