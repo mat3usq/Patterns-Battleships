@@ -2,6 +2,7 @@ package kck.battleship.model.clases;
 
 import kck.battleship.controller.GameException;
 import kck.battleship.controller.ViewController;
+import kck.battleship.model.clases.FactoryMethod.*;
 import kck.battleship.model.clases.State.DefendState;
 import kck.battleship.model.clases.State.PlayerState;
 import kck.battleship.model.clases.Strategy.Difficulty;
@@ -26,13 +27,14 @@ public class Player {
     private final BattleField battleField = new BattleField();
     private final ArrayList<Position> shoots = new ArrayList<>();
     public final ArrayList<Position> allShoots = new ArrayList<>();
-    private final ArrayList<Ship> ships = createShips();
+    private ArrayList<Ship> ships = null;
     private static final View view = ViewController.getInstance();
     private PlayerState state;
     private Difficulty difficulty;
 
     public Player(String name) {
         this.name = name;
+        this.ships = createShips();
         isAI = false;
         lastShootTime = new Date();
         this.state = new DefendState();
@@ -149,11 +151,29 @@ public class Player {
     }
 
     private ArrayList<Ship> createShips() {
-        ArrayList<Ship> ships = new ArrayList<>();
-        for (TypesShips type : TypesShips.values())
-            for (int i = 0; i < type.getNumberShips(); i++)
-                ships.add(new Ship(TypesShips.getShipName(type), type.getShipLength()));
-        return ships;
+        ArrayList<Ship> shipsList = new ArrayList<>();
+        ShipFactory submarineFactory = new SubmarineFactory();
+        ShipFactory cruiserFactory = new CruiserFactory();
+        ShipFactory destroyerFactory = new DestroyerFactory();
+        ShipFactory battleshipFactory = new BattleshipFactory();
+
+        for (int i = 0; i < TypesShips.SUBMARINE.getNumberShips(); i++) {
+            shipsList.add(submarineFactory.createShip());
+        }
+
+        for (int i = 0; i < TypesShips.CRUISER.getNumberShips(); i++) {
+            shipsList.add(cruiserFactory.createShip());
+        }
+
+        for (int i = 0; i < TypesShips.DESTROYER.getNumberShips(); i++) {
+            shipsList.add(destroyerFactory.createShip());
+        }
+
+        for (int i = 0; i < TypesShips.BATTLESHIP.getNumberShips(); i++) {
+            shipsList.add(battleshipFactory.createShip());
+        }
+
+        return shipsList;
     }
 
     public boolean areShipsStillSailing() {
