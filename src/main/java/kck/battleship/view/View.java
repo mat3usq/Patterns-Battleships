@@ -52,4 +52,16 @@ public abstract class View {
     public abstract void printMode(int selected);
 
     public abstract int getSelectedMode();
+
+    public abstract void printModesInSimulation();
+
+    public abstract void printSelectedModeInSimulation(int x, int y);
+
+    public abstract int getFirstSelectedModeInSimulation();
+
+    public abstract int getSecondSelectedModeInSimulation();
+
+    public abstract void showNormalGameScreen();
+
+    public abstract void showSimulateGameScreen();
 }

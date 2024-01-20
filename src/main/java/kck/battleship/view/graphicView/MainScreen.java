@@ -9,6 +9,7 @@ public class MainScreen extends JFrame {
     public JPanelMenu menuPanel;
     public JDialogPopup popup;
     public JPanelRules rules;
+    public JPanelDifficulty difficulty;
     public JPanelRanking ranking;
     public JPanelResults results;
 
@@ -39,6 +40,10 @@ public class MainScreen extends JFrame {
         rules = new JPanelRules();
         rules.setVisible(false);
         this.add(rules);
+
+        difficulty = new JPanelDifficulty();
+        difficulty.setVisible(false);
+        this.add(difficulty);
 
         ranking = new JPanelRanking();
         ranking.setVisible(false);

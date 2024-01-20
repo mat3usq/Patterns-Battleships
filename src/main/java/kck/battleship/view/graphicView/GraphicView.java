@@ -20,6 +20,8 @@ public class GraphicView extends View {
     public int menuSelected = 0;
     public int shopSelected = 0;
     public int selectedMode = 0;
+    public int firstSelectedModeInSimulation = 0;
+    public int secondSelectedModeInSimulation = 0;
     public final int sizeOptions = 6;
     public final int sizeOptionsShop = 2;
     public final int sizeModes = 3;
@@ -166,7 +168,6 @@ public class GraphicView extends View {
         Timer timer = new Timer(2500, e -> {
             mainScreen.results.setVisible(false);
             mainScreen.menuPanel.setVisible(true);
-            printMenuPage(0);
         });
         timer.setRepeats(false);
         timer.start();
@@ -561,8 +562,75 @@ public class GraphicView extends View {
                 break;
         }
     }
+
     @Override
-    public int getSelectedMode(){
+    public void printModesInSimulation() {
+        mainScreen.menuPanel.setVisible(false);
+        mainScreen.difficulty.setVisible(true);
+        mainScreen.difficulty.requestFocusInWindow();
+    }
+
+    @Override
+    public void printSelectedModeInSimulation(int selected, int y) {
+        if (y == 0)
+        {
+            switch (selected) {
+                case 0:
+                    mainScreen.difficulty.firstComputerUpLabel.setBounds(130, 395, 30, 30);
+                    break;
+                case 1:
+                    mainScreen.difficulty.firstComputerUpLabel.setBounds(290, 395, 30, 30);
+                    break;
+                case 2:
+                    mainScreen.difficulty.firstComputerUpLabel.setBounds(450, 395, 30, 30);
+                    break;
+            }
+            this.firstSelectedModeInSimulation = selected;
+        }
+        else{
+            switch (selected) {
+                case 0:
+                    mainScreen.difficulty.secondComputerUpLabel.setBounds(130, 565, 30, 30);
+                    break;
+                case 1:
+                    mainScreen.difficulty.secondComputerUpLabel.setBounds(290, 565, 30, 30);
+                    break;
+                case 2:
+                    mainScreen.difficulty.secondComputerUpLabel.setBounds(450, 565, 30, 30);
+                    break;
+            }
+            this.secondSelectedModeInSimulation = selected;
+        }
+    }
+
+    @Override
+    public int getSelectedMode() {
         return selectedMode;
+    }
+
+    @Override
+    public int getFirstSelectedModeInSimulation() {
+        return firstSelectedModeInSimulation;
+    }
+
+    @Override
+    public int getSecondSelectedModeInSimulation() {
+        return secondSelectedModeInSimulation;
+    }
+
+    @Override
+    public void showNormalGameScreen() {
+        mainScreen.setVisible(false);
+        gameScreen = new GameScreen(false);
+    }
+
+    @Override
+    public void showSimulateGameScreen() {
+        mainScreen.difficulty.setVisible(false);
+        mainScreen.menuPanel.setVisible(true);
+        mainScreen.setVisible(false);
+        gameScreen = new GameScreen(true);
+        gameScreen.setVisible(true);
+        gameScreen.battle.setVisible(true);
     }
 }

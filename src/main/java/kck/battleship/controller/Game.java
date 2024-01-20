@@ -38,8 +38,8 @@ public class Game {
     }
 
     public void setSimulateGame() {
-        firstPlayer = new Player( true, view.getSelectedMode());
-        secondPlayer = new Player( true, view.getSelectedMode());
+        firstPlayer = new Player( true, view.getFirstSelectedModeInSimulation());
+        secondPlayer = new Player( true, view.getSecondSelectedModeInSimulation());
         firstPlayerRank = null;
     }
 

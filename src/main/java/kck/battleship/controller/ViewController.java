@@ -66,6 +66,8 @@ public class ViewController {
 
                 addRankingActionsListeners();
                 addRankingKeyListeners();
+
+                addSimulationModesActionsListeners();
             }
         });
         graphicView.loginScreen.exit.addActionListener(e -> graphicView.printExit());
@@ -102,6 +104,7 @@ public class ViewController {
             option(5);
         });
     }
+
 
     private void addMenuKeyListeners() {
         graphicView.mainScreen.menuPanel.addKeyListener(new KeyAdapter() {
@@ -276,28 +279,58 @@ public class ViewController {
         });
     }
 
+    private void addSimulationModesActionsListeners() {
+        graphicView.mainScreen.difficulty.backMenu.addActionListener(ev -> {
+            graphicView.mainScreen.menuPanel.setVisible(true);
+            graphicView.mainScreen.difficulty.setVisible(false);
+            graphicView.printMenuPage(1);
+        });
+
+        graphicView.mainScreen.difficulty.firstComputerEasyMode.addActionListener(ev -> {
+            graphicView.printSelectedModeInSimulation(0, 0);
+        });
+
+        graphicView.mainScreen.difficulty.firstComputerNormalMode.addActionListener(ev -> {
+            graphicView.printSelectedModeInSimulation(1, 0);
+        });
+
+        graphicView.mainScreen.difficulty.firstComputerHardMode.addActionListener(ev -> {
+            graphicView.printSelectedModeInSimulation(2, 0);
+        });
+
+        graphicView.mainScreen.difficulty.secondComputerEasyMode.addActionListener(ev -> {
+            graphicView.printSelectedModeInSimulation(0, 1);
+        });
+
+        graphicView.mainScreen.difficulty.secondComputerNormalMode.addActionListener(ev -> {
+            graphicView.printSelectedModeInSimulation(1, 1);
+        });
+
+        graphicView.mainScreen.difficulty.secondComputerHardMode.addActionListener(ev -> {
+            graphicView.printSelectedModeInSimulation(2, 1);
+        });
+
+        graphicView.mainScreen.difficulty.game.addActionListener(ev -> {
+            graphicView.showSimulateGameScreen();
+            graphicView.game = Game.getInstance();
+            graphicView.game.setSimulateGame();
+            graphicView.game.runSimulation();
+        });
+    }
+
     private void option(int selected) {
         switch (selected) {
             case 0 -> {
                 try {
                     graphicView.game = Game.getInstance();
                     graphicView.game.setPlayerGame(GraphicView.name);
-                    graphicView.mainScreen.setVisible(false);
-                    graphicView.gameScreen = new GameScreen(false);
+                    graphicView.showNormalGameScreen();
                     graphicView.game.addAllShips();
                 } catch (IOException | InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }
-            case 1 -> {
-                graphicView.mainScreen.setVisible(false);
-                graphicView.gameScreen = new GameScreen(true);
-                graphicView.gameScreen.setVisible(true);
-                graphicView.gameScreen.battle.setVisible(true);
-                graphicView.game = Game.getInstance();
-                graphicView. game.setSimulateGame();
-                graphicView.game.runSimulation();
-            }
+            case 1 -> graphicView.printModesInSimulation();
             case 2 -> {
                 graphicView.printShop();
                 graphicView.printShopPage(0);
