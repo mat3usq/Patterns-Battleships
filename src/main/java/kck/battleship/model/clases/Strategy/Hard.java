@@ -192,7 +192,7 @@ public class Hard implements Difficulty{
         }
         int randomIndex = random.nextInt(positions.size());
         Position target = positions.get(randomIndex);
-        positions.remove(randomIndex);
+        positions.clear();
         lastshootPosition= target;
         System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
         return target;

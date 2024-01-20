@@ -34,12 +34,12 @@ public class Game {
         firstPlayer.getShop();
         hasExtraShip = firstPlayer.hasAirCrafter;
         firstPlayerRank = new Ranking(firstPlayer, 0);
-        secondPlayer = new Player("Wróg", true);
+        secondPlayer = new Player("Wróg", true, "Hard");
     }
 
     public void setSimulateGame() {
-        firstPlayer = new Player("Enemy", true);
-        secondPlayer = new Player("Enemy2", true);
+        firstPlayer = new Player("Easy", true, "Easy");
+        secondPlayer = new Player("Normal", true, "Normal");
         firstPlayerRank = null;
     }
 
@@ -106,12 +106,12 @@ public class Game {
 
     private void playSimulateGame() throws InterruptedException {
         boolean attacker = playTurn(firstPlayer, secondPlayer, false);
-        Thread.sleep(1500);
+        Thread.sleep(15);
 
         if (attacker)
             playTurn(secondPlayer, firstPlayer, true);
 
-        Thread.sleep(1500);
+        Thread.sleep(15);
 
         if (!firstPlayer.areShipsStillSailing() || !secondPlayer.areShipsStillSailing())
             printResultGame();

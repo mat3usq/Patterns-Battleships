@@ -12,13 +12,15 @@ public class ProbabilityTable implements Observer {
     public ProbabilityTable(){
         probability = new int[20][20];
         shipslenght = new ArrayList<>();
-        make_probability();
         initialShipsLenght();
+        make_probability();
+
     }
 
     private void  initialShipsLenght(){
         shipslenght.add(2);
         shipslenght.add(2);
+        shipslenght.add(3);
         shipslenght.add(3);
         shipslenght.add(4);
     }
@@ -32,20 +34,19 @@ public class ProbabilityTable implements Observer {
                 for(int j=1;j<=10;j++)
                 {
                     boolean canaddprobabilty = true;
-                    for(int k=j;k<k+ship;k++){
+                    for(int k=j;k<j+ship;k++){
                         if(probability[i][k]==-1 || k>10) {
                             canaddprobabilty = false;
                             break;
                         }
                     }
                     if(canaddprobabilty) {
-                        for (int k = j; k < k + ship; k++) {
-                            if (probability[i][k] == -1 || k > 10)
+                        for (int k = j; k < j + ship; k++) {
                                 probability[i][k] += 1;
                         }
                     }
                     canaddprobabilty = true;
-                    for(int k=i;k<k+ship;k++){
+                    for(int k=i;k<i+ship;k++){
                         if(probability[k][j]==-1 || k>10) {
                             canaddprobabilty = false;
                             break;
@@ -53,14 +54,19 @@ public class ProbabilityTable implements Observer {
 
                     }
                     if(canaddprobabilty) {
-                        for (int k = j; k < k + ship; k++) {
-                            if (probability[k][j] == -1 || k > 10)
+                        for (int k = i; k < i + ship; k++) {
                                 probability[k][j] += 1;
                         }
                     }
                 }
             }
-
+        }
+        System.out.println("Probability Field:");
+        for(int i = 1; i <= 10; i++) {
+            for(int j = 1; j <= 10; j++) {
+                System.out.print(probability[i][j] + " ");
+            }
+            System.out.println(); // This will create a new line after each row
         }
     }
     public void reset_probability()
@@ -89,7 +95,7 @@ public class ProbabilityTable implements Observer {
     public void update(Position position, ArrayList<Integer> shiplenght){
         int x=position.getRow()+1;
         int y=position.getColumn()+1;
-        if( shiplenght == null || shiplenght.isEmpty() == true) {
+        if( shiplenght != null && shiplenght.isEmpty() != true) {
             shipslenght = shiplenght;
         }
         add_shot(x,y);

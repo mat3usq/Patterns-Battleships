@@ -5,7 +5,9 @@ import kck.battleship.controller.ViewController;
 import kck.battleship.model.clases.State.DefendState;
 import kck.battleship.model.clases.State.PlayerState;
 import kck.battleship.model.clases.Strategy.Difficulty;
+import kck.battleship.model.clases.Strategy.Easy;
 import kck.battleship.model.clases.Strategy.Hard;
+import kck.battleship.model.clases.Strategy.Normal;
 import kck.battleship.model.types.TypesDirection;
 import kck.battleship.model.types.TypesShips;
 import kck.battleship.view.View;
@@ -36,10 +38,15 @@ public class Player {
         this.state = new DefendState();
     }
 
-    public Player(String name, boolean isAI) {
+    public Player(String name, boolean isAI, String diffi) {
         this.name = name;
         this.isAI = isAI;
-        difficulty = new Hard();
+        if(diffi == "Easy")
+        difficulty = new Easy();
+        if(diffi == "Normal")
+            difficulty = new Normal();
+        if(diffi == "Hard")
+            difficulty = new Hard();
         this.state = new DefendState();
     }
 

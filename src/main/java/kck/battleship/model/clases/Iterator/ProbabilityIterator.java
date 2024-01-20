@@ -24,7 +24,7 @@ public class ProbabilityIterator implements Observer {
         currentMaxProbability = -1;
         for (int i = 1; i <= 10; i++) {
             for (int j = 1; j <= 10; j++) {
-                int probability = probabilityTable.get_position(i, j);
+                int probability = probabilityTable.get_position(j, i);
                 if (probability > currentMaxProbability) {
                     currentMaxProbability = probability;
                     maxProbabilityPositions.clear();

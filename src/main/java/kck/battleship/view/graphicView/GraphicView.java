@@ -156,19 +156,14 @@ public class GraphicView extends View {
         mainScreen.menuPanel.setVisible(false);
         gameScreen.setVisible(false);
         mainScreen.results.setVisible(true);
-        if (player.getName().equals("Enemy"))
-            mainScreen.results.winnerName.setText("Zwyciezca: Computer 1");
-        else if (player.getName().equals("Enemy2"))
-            mainScreen.results.winnerName.setText("Zwyciezca: Computer 2");
-        else
-            mainScreen.results.winnerName.setText("Zwyciezca: " + player.getName());
+        mainScreen.results.winnerName.setText("Zwyciezca: " + player.getName());
 
         if (!player.isAI())
             mainScreen.results.points.setText("Twoj wynik: " + rank.getPoints());
         else
             mainScreen.results.points.setText("");
 
-        Timer timer = new Timer(50, e -> {
+        Timer timer = new Timer(2500, e -> {
             mainScreen.results.setVisible(false);
             mainScreen.menuPanel.setVisible(true);
             printMenuPage(0);
