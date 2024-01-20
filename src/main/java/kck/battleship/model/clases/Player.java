@@ -27,14 +27,13 @@ public class Player {
     private final BattleField battleField = new BattleField();
     private final ArrayList<Position> shoots = new ArrayList<>();
     public final ArrayList<Position> allShoots = new ArrayList<>();
-    private ArrayList<Ship> ships = null;
+    private ArrayList<Ship> ships = createShips();
     private static final View view = ViewController.getInstance();
     private PlayerState state;
     private Difficulty difficulty;
 
     public Player(String name) {
         this.name = name;
-        this.ships = createShips();
         isAI = false;
         lastShootTime = new Date();
         this.state = new DefendState();
