@@ -261,9 +261,9 @@ public class GraphicView extends View {
             }
         }
 
-//        if (firstPlayer.isAI())
-//            showEnemyShipsSimulate(secondPlayerShips);
-//        else showEnemyShips(secondPlayerShips);
+        if (firstPlayer.isAI())
+            showEnemyShipsSimulate(secondPlayerShips);
+        else showEnemyShips(secondPlayerShips);
 
         for (Ship ship : firstPlayerShips) {
             if (firstBattleField.isShipSunk(ship)) {

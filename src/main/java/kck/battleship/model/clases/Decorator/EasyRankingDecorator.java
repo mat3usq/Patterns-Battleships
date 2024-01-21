@@ -1,19 +1,15 @@
 package kck.battleship.model.clases.Decorator;
 
-public class EasyRankingDecorator implements IRanking {
-    private IRanking wrappedRanking;
+
+public class EasyRankingDecorator extends RankingDecorator {
+    private static final double EASY_MULTIPLIER = 1;
 
     public EasyRankingDecorator(IRanking ranking) {
-        this.wrappedRanking = ranking;
+        super(ranking);
     }
 
     @Override
     public void addPoints(int points) {
-        wrappedRanking.addPoints(points);
-    }
-
-    @Override
-    public int getPoints() {
-        return wrappedRanking.getPoints();
+        super.addPoints((int)(points * EASY_MULTIPLIER));
     }
 }
