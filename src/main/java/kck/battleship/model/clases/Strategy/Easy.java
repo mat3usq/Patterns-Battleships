@@ -80,79 +80,35 @@ public class Easy implements Difficulty{
                     {
                         //do nothing
                     }
-                    else if(board[i][j+1]==2 && board[i][j-1]==1)
-                    {
-                        //do nothing
+                    else if(board[i][j+1] == 2 && board[i][j-1] == 0) {
+                        return createAndHandlePosition(j-2, i-1);
                     }
-                    else if(board[i][j+1]==2 && board[i][j-1]==0)
-                    {
-                        Position temppos = new Position(j-2,i-1);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i][j+1] == 0 && board[i][j-1] == 2) {
+                        return createAndHandlePosition(j, i-1);
                     }
-                    else if(board[i][j+1]==0 && board[i][j-1]==2)
-                    {
-                        Position temppos = new Position(j,i-1);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i-1][j] == 2 && board[i+1][j] == 0) {
+                        return createAndHandlePosition(j-1, i);
                     }
-                    else if(board[i-1][j]==2 && board[i+1][j]==0)
-                    {
-                        Position temppos = new Position(j-1,i);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i-1][j] == 0 && board[i+1][j] == 2) {
+                        return createAndHandlePosition(j-1, i-2);
                     }
-                    else if(board[i-1][j]==0 && board[i+1][j]==2)
-                    {
-                        Position temppos = new Position(j-1,i-2);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i-1][j] == 0 && board[i+1][j] == 0) {
+                        return createAndHandlePosition(j-1, i-2);
                     }
-                    else if(board[i-1][j]==0 && board[i+1][j]==0)
-                    {
-                        Position temppos = new Position(j-1,i-2);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i-1][j] == 1 && board[i+1][j] == 0) {
+                        return createAndHandlePosition(j-1, i);
                     }
-                    else if(board[i-1][j]==1 && board[i+1][j]==0)
-                    {
-                        Position temppos = new Position(j-1,i);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i-1][j] == 0 && board[i+1][j] == 1) {
+                        return createAndHandlePosition(j-1, i-2);
                     }
-                    else if(board[i-1][j]==0 && board[i+1][j]==1)
-                    {
-                        Position temppos = new Position(j-1,i-2);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i][j+1] == 0 && board[i][j-1] == 0) {
+                        return createAndHandlePosition(j, i-1);
                     }
-                    else if(board[i][j+1]==0 && board[i][j-1]==0)
-                    {
-                        Position temppos = new Position(j,i-1);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i][j+1] == 0 && board[i][j-1] == 1) {
+                        return createAndHandlePosition(j, i-1);
                     }
-                    else if(board[i][j+1]==0 && board[i][j-1]==1)
-                    {
-                        Position temppos = new Position(j,i-1);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
-                    }
-                    else if(board[i][j+1]==1 && board[i][j-1]==0)
-                    {
-                        Position temppos = new Position(j-2,i-1);
-                        lastshootPosition = temppos;
-                        positions.remove(temppos);
-                        return temppos;
+                    else if(board[i][j+1] == 1 && board[i][j-1] == 0) {
+                        return createAndHandlePosition(j-2, i-1);
                     }
 
                 }
@@ -164,8 +120,14 @@ public class Easy implements Difficulty{
         Position target = positions.get(randomIndex);
         positions.remove(randomIndex);
         lastshootPosition= target;
-    System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
+   // System.out.println("randomowo strzelilo w pozycje" + target.getRow() + " " + target.getColumn());
         return target;
+    }
+    private Position createAndHandlePosition(int column, int row) {
+        Position tempPos = new Position(column, row);
+        lastshootPosition = tempPos;
+        positions.remove(tempPos);
+        return tempPos;
     }
     public void get_result(char result)
     {
@@ -178,16 +140,13 @@ public class Easy implements Difficulty{
         else if(result =='⎕'){
             lastshot = 2;
         }
-        else if(result =='ℳ')
-        {
+        else if(result =='ℳ'){
             lastshot = 1;
         }
-        else if(result =='✜')
-        {
+        else if(result =='✜'){
             lastshot = 2;
         }
-        else
-        {
+        else {
             lastshot =0;
         }
     }
