@@ -25,6 +25,7 @@ public class GraphicView extends View {
     public final int sizeOptions = 6;
     public final int sizeOptionsShop = 2;
     public final int sizeModes = 3;
+    private boolean turn = false;
 
     public HomeScreen homeScreen;
     public LoginScreen loginScreen;
@@ -133,7 +134,7 @@ public class GraphicView extends View {
 
     @Override
     public void printShot(Player player, Position position, boolean isHit) {
-        if (player.getName().equals("Wróg") || player.getName().equals("Enemy2")) {
+        if (turn) {
             if (isHit) {
                 gameScreen.battle.shotLabelDefender.setText(position.toString(position));
                 gameScreen.battle.shotImgDefender.setVisible(true);
@@ -150,6 +151,7 @@ public class GraphicView extends View {
                 gameScreen.battle.missImgAttacker.setVisible(true);
             }
         }
+        turn = !turn;
     }
 
     @Override
@@ -261,9 +263,9 @@ public class GraphicView extends View {
             }
         }
 
-        if (firstPlayer.isAI())
-            showEnemyShipsSimulate(secondPlayerShips);
-        else showEnemyShips(secondPlayerShips);
+//        if (firstPlayer.isAI())
+//            showEnemyShipsSimulate(secondPlayerShips);
+//        else showEnemyShips(secondPlayerShips);
 
         for (Ship ship : firstPlayerShips) {
             if (firstBattleField.isShipSunk(ship)) {

@@ -61,13 +61,13 @@ public class ProbabilityTable implements Observer {
                 }
             }
         }
-        System.out.println("Probability Field:");
-        for(int i = 1; i <= 10; i++) {
-            for(int j = 1; j <= 10; j++) {
-                System.out.print(probability[i][j] + " ");
-            }
-            System.out.println(); // This will create a new line after each row
-        }
+//        System.out.println("Probability Field:");
+//        for(int i = 1; i <= 10; i++) {
+//            for(int j = 1; j <= 10; j++) {
+//                System.out.print(probability[i][j] + " ");
+//            }
+//            System.out.println(); // This will create a new line after each row
+//        }
     }
     public void reset_probability()
     {

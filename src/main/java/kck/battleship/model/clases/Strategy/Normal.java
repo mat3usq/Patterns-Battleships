@@ -63,7 +63,7 @@ public class Normal implements Difficulty {
     public Position shootAtRandom() {
         if(lastshootPosition != null)
             board[lastshootPosition.getColumn()+1][lastshootPosition.getRow()+1] = lastshot;
-        System.out.println(lastshot);
+//        System.out.println(lastshot);
         for(int i=1;i<=10;i++)
         {
             for(int j=1;j<=10;j++)

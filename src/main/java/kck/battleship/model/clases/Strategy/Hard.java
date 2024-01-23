@@ -72,7 +72,7 @@ public class Hard implements Difficulty{
             board[lastshootPosition.getColumn() + 1][lastshootPosition.getRow() + 1] = lastshot;
             notifyObservers(lastshootPosition, emptylist);
         }
-        System.out.println(lastshot);
+//        System.out.println(lastshot);
         for(int i=1;i<=10;i++)
         {
             for(int j=1;j<=10;j++)
