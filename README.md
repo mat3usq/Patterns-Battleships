@@ -62,5 +62,5 @@ Celem projektu jest przeniesienie klasycznej gry planszowej "Statki" do formy in
 ## Interesujące Zagadnienia Projektowe
 
 - **Wykorzystanie Swinga**: Prosta integracja Swing do zarządzania interfejsem graficznym i zapewnienia estetycznego wyglądu.
-- **Architektura MVC**: Ułatwia dodawanie nowych widoków i zmianę strategii prezentacji bez modyfikacji logiki aplikacji.
+- **Architektura MVC**: Ułatwia dodawanie nowych widoków i zmianę strategii prezentacji bez modyfikacji logiki aplikacji..
 
